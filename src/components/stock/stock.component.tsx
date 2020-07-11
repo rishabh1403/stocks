@@ -17,6 +17,7 @@ export default function Stock({ name, price }) {
   const [lastUpdate, setLastUpdate] = React.useState(new Date());
   const [history, setHistory] = React.useState([]);
   const prevPrice: number = usePrevious(price);
+
   React.useEffect(() => {
     if (prevPrice) {
       if (prevPrice < price) {
@@ -25,10 +26,12 @@ export default function Stock({ name, price }) {
         setColor("#d32f2f");
       }
     }
-    setHistory((h) => [...h, price]);
+    setHistory((oldPrice) => [...oldPrice, price]);
     setLastUpdate(new Date());
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [price]);
+
   return (
     <TableRow>
       <TableCell component="th" scope="row">

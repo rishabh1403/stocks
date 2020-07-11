@@ -7,27 +7,54 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Stock from "../stock/stock.component";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
 
+const useStyles = makeStyles((theme) => ({
+  toolbar: {
+    backgroundColor: "#673ab7",
+  },
+  appbar: {
+    backgroundColor: "#673ab7",
+    marginBottom: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+  },
+}));
 export default function Stocks({ stocks }) {
+  const classes = useStyles();
+
   return (
-    <Paper>
-      <TableContainer component={Paper}>
-        <Table aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Price</TableCell>
-              <TableCell>Last Updated</TableCell>
-              <TableCell>History</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {Object.keys(stocks).map((s, i) => {
-              return <Stock name={s} key={i} price={stocks[s]} />;
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Paper>
+    <>
+      <AppBar className={classes.appbar} position="static">
+        <Toolbar className={classes.toolbar}>
+          <Typography variant="h6" className={classes.title}>
+            Stocks
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Paper style={{ maxWidth: "900px", margin: "auto" }}>
+        <TableContainer component={Paper}>
+          <Table aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell>Price</TableCell>
+                <TableCell>Last Updated</TableCell>
+                <TableCell>History</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {Object.keys(stocks).map((stock, idx) => {
+                return <Stock name={stock} key={idx} price={stocks[stock]} />;
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
+    </>
   );
 }
