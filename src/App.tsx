@@ -19,14 +19,17 @@ const useStyles = makeStyles({
   },
 });
 
+interface IStocks {
+    string?: string;
+}
 const App: FunctionComponent = () => {
   const classes = useStyles();
-  const [stocks, setStocks] = React.useState<{ string?: string }>({});
+  const [stocks, setStocks] = React.useState<IStocks>({});
 
   React.useEffect(() => {
     ws.onmessage = (evt) => {
       const messages = JSON.parse(evt.data);
-      const currentStocks = {};
+      const currentStocks:IStocks  = {};
       for (const message of messages) {
         currentStocks[message[0]] = message[1];
       }
