@@ -1,9 +1,9 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import "./App.css";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import { makeStyles } from "@material-ui/core/styles";
 import Stocks from "./components/stocks/stocks.components";
-import ws from "./utils/socket"
+import ws from "./utils/socket";
 
 const theme = createMuiTheme({
   palette: {
@@ -19,9 +19,9 @@ const useStyles = makeStyles({
   },
 });
 
-function App() {
+const App: FunctionComponent = () => {
   const classes = useStyles();
-  const [stocks, setStocks] = React.useState({});
+  const [stocks, setStocks] = React.useState<{ string?: string }>({});
 
   React.useEffect(() => {
     ws.onmessage = (evt) => {
@@ -44,6 +44,6 @@ function App() {
       </div>
     </ThemeProvider>
   );
-}
+};
 
 export default App;

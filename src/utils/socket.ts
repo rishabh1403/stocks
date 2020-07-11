@@ -1,4 +1,4 @@
-import {websocketUrl} from "../constants";
+import { websocketUrl } from "../constants";
 
 let ws = new WebSocket(websocketUrl);
 let connectInterval = null;
@@ -13,12 +13,12 @@ const connect = () => {
   };
 
   ws.onclose = (e) => {
-    console.log(
-      `Socket is closed. Reconnecting...`,
-      e.reason
-    );
+    console.log(`Socket is closed. Reconnecting...`, e.reason);
     timeout = timeout + timeout;
-    connectInterval = setTimeout(checkWebsocketConnection, Math.min(10000, timeout));
+    connectInterval = setTimeout(
+      checkWebsocketConnection,
+      Math.min(10000, timeout)
+    );
   };
 
   ws.onerror = (err) => {
@@ -33,8 +33,8 @@ ws.onopen = () => {
   clearTimeout(connectInterval);
 };
 
-function checkWebsocketConnection(){
+function checkWebsocketConnection() {
   if (!ws || ws.readyState === WebSocket.CLOSED) connect();
-};
+}
 
 export default ws;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -24,7 +24,13 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
 }));
-export default function Stocks({ stocks }) {
+
+interface IStocks {
+  stocks: {
+    string?: string;
+  };
+}
+const Stocks: FunctionComponent<IStocks> = ({ stocks }) => {
   const classes = useStyles();
 
   return (
@@ -57,4 +63,6 @@ export default function Stocks({ stocks }) {
       </Paper>
     </>
   );
-}
+};
+
+export default Stocks;

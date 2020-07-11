@@ -1,1 +1,1 @@
-export const websocketUrl = "ws://stocks.mnet.website";
+export const websocketUrl:string = "ws://stocks.mnet.website";
