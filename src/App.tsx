@@ -1,16 +1,8 @@
 import React from "react";
 import "./App.css";
-import { Sparklines, SparklinesLine, SparklinesSpots } from "react-sparklines";
-import moment from "moment";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
+import Stocks from "./components/stocks/stocks.components";
 var ws = new WebSocket("ws://stocks.mnet.website");
 var connectInterval;
 var timeout = null;
@@ -60,59 +52,8 @@ ws.onopen = () => {
 const check = () => {
   if (!ws || ws.readyState === WebSocket.CLOSED) connect(); //check if websocket instance is closed, if so call `connect` function.
 };
-function usePrevious(value) {
-  const ref = React.useRef();
-  React.useEffect(() => {
-    ref.current = value;
-  }, [value]);
-  return ref.current;
-}
-function Stock({ name, price }) {
-  const [color, setColor] = React.useState("white");
-  const [lastUpdate, setLastUpdate] = React.useState(new Date());
-  const [history, setHistory] = React.useState([]);
-  const prevPrice: number = usePrevious(price);
-  React.useEffect(() => {
-    if (prevPrice) {
-      if (prevPrice < price) {
-        setColor("#388e3c");
-      } else {
-        setColor("#d32f2f");
-      }
-    }
-    setHistory((h) => [...h, price]);
-    setLastUpdate(new Date());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [price]);
-  return (
-    <TableRow>
-      <TableCell component="th" scope="row">
-        {name}
-      </TableCell>
-      <TableCell style={{color: color}} color="error">{price.toFixed(2)}</TableCell>
-      <TableCell>{moment(lastUpdate).fromNow()}</TableCell>
-      <TableCell>
-        <Sparklines data={history} limit={20}>
-          <SparklinesLine color="#1c8cdc" />
-          <SparklinesSpots />
-        </Sparklines>
-      </TableCell>
-    </TableRow>
-  );
-  // return (
-  //   <div style={{ color: color }}>
-  //     name: {name}&nbsp;
-  //     price : {price}&nbsp;
-  //     last updates: {moment(lastUpdate).fromNow()} &nbsp;
-  //     <div style={{ width: "200px", display:"inline-block" }}>
-  //       <Sparklines data={history} limit={20}>
-  //         <SparklinesLine color="#1c8cdc" />
-  //         <SparklinesSpots />
-  //       </Sparklines>
-  //     </div>
-  //   </div>
-  // );
-}
+
+
 
 function App() {
   // const [ws, setWs] = React.useState(null);
@@ -152,29 +93,9 @@ function App() {
           minHeight: "100vh",
           backgroundColor: "#303030",
         }}
-      >
-        <Paper>
-          {/* {Object.keys(stocks).map((s, i) => {
-          return <Stock name={s} key={i} price={stocks[s]} />;
-        })} */}
-          <TableContainer component={Paper}>
-            <Table aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Price</TableCell>
-                  <TableCell>Last Updated</TableCell>
-                  <TableCell>History</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {Object.keys(stocks).map((s, i) => {
-                  return <Stock name={s} key={i} price={stocks[s]} />;
-                })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Paper>
+      > 
+      <Stocks stocks={stocks} />
+        
       </div>
     </ThemeProvider>
   );
