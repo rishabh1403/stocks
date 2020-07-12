@@ -1,44 +1,16 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Stocks App
 
-## Available Scripts
+## Libraries used
+- React
+- Material UI
+- Moment
+- React Sparklines
 
-In the project directory, you can run:
+## Live Demo
+http://stocks-proximity.s3-website.ap-south-1.amazonaws.com/
 
-### `yarn start`
+## Failed deployment on github pages
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The websocket is using unsecured protocol, however the frontend was deployed on a secured server(Github in this case). So, the initial files were loaded over https and later on there was an attempt to coonect to a unsecured server i.e. websocket. This throws a mixed content error and a lot of browsers block this to ensure the data is safe. 
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+We can solve this via either deploying the frontend on http instead of https. Also, we can create a server which is secured by SSL. Our frontend will talk to the server and server will in turn talk o the websockets. Once a message is recieved on server, it can process the data to check for any malicious content and then forward the data to frontend.
